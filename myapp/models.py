@@ -1,0 +1,94 @@
+from django.db import models
+
+# Create your models here.
+class Service(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    icon = models.CharField(
+        max_length=100,
+        help_text="FontAwesome icon class (e.g. fas fa-bolt)",
+        blank=True
+    )
+
+    def __str__(self):
+        return self.title
+
+
+class ServiceFeature(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        related_name="features"
+    )
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    icon = models.CharField(
+        max_length=100,
+        help_text="FontAwesome icon class (e.g. fas fa-industry)",
+        blank=True
+    )
+
+    def __str__(self):
+        return f"{self.service.title} - {self.title}"
+
+
+
+
+
+class HomeService(models.Model):
+    title = models.CharField(max_length=100)
+    icon = models.CharField(
+        max_length=100,
+        help_text="FontAwesome icon class (e.g. fas fa-bolt)"
+    )
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    service = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.service}"
+
+
+
+
+
+from django.db import models
+
+class AboutSection(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+
+
+from django.db import models
+
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='projects/')
+
+    def __str__(self):
+        return self.title
+
+
+
